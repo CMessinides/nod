@@ -30,6 +30,10 @@ app.prepare().then(() => {
     return app.render(req, res, "/notebook", { id: req.params.id });
   });
 
+  server.get("/", (req, res) => {
+    return app.render(req, res, "/index", req.query);
+  });
+
   server.get("*", (req, res) => {
     return handle(req, res);
   });
