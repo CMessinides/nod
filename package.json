@@ -1,0 +1,36 @@
+{
+  "name": "nod",
+  "version": "0.0.1",
+  "description": "Notes and tasks, all in one place.",
+  "main": "server.js",
+  "repository": "git@github.com:CMessinides/nod.git",
+  "author": "Cameron Messinides <cameron.messinides@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "husky": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "linters": {
+      "*.js": ["eslint --fix", "prettier --write", "git add"],
+      "*.json": ["prettier --write", "git add"]
+    }
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "next": "^8.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
+    "husky": "^2.3.0",
+    "lint-staged": "^8.1.7",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.17.1"
+  }
+}
