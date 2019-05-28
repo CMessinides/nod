@@ -8,9 +8,9 @@ function createClientRoute(route, params = {}) {
   }
 
   const queryString = Object.keys(params)
-    .map(key => `${key}=${params[key]}`)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
     .join("&");
-  return queryString ? route + "?" + encodeURIComponent(queryString) : route;
+  return queryString ? route + "?" + queryString : route;
 }
 
 function createServerRoute(route, params = {}) {
