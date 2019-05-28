@@ -1,5 +1,6 @@
 const express = require("express");
 const next = require("next");
+const { routes } = require("./routes");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const apiRoot = process.env.API_ROOT || "/api";
@@ -24,6 +25,10 @@ app.prepare().then(() => {
     // eslint-disable-next-line no-console
     console.log(`> Mounting API at http://localhost:${port}${apiRoot}`);
   }
+
+  server.get(routes.notebook, (req, res) => {
+    return app.render(req, res, "/notebook", { id: req.params.id });
+  });
 
   server.get("*", (req, res) => {
     return handle(req, res);
