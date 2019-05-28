@@ -11,7 +11,9 @@
     "start": "NODE_ENV=production node server.js"
   },
   "husky": {
-    "pre-commit": "lint-staged"
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "linters": {
