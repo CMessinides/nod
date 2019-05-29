@@ -21,8 +21,8 @@ app.prepare().then(() => {
     console.log(`> Proxying API at http://localhost:${port}${apiRoot}`);
   } else {
     // In production, mount the API server as a sub-app
-    const api = require("./api");
-    server.use(apiRoot, api);
+    const createApiServer = require("./api");
+    server.use(apiRoot, createApiServer());
     // eslint-disable-next-line no-console
     console.log(`> Mounting API at http://localhost:${port}${apiRoot}`);
   }

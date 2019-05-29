@@ -1,10 +1,9 @@
-const express = require("express");
-const api = require("./api");
+const createApiServer = require("./api");
 
 const port = parseInt(process.env.API_PORT, 10) || 3001;
-const server = express();
+const dev = process.env.NODE_ENV !== "produciton";
 
-server.use("/", api);
+const server = createApiServer({ dev });
 
 server.listen(port, err => {
   if (err) throw err;

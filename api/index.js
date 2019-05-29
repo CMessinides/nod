@@ -1,9 +1,24 @@
 const express = require("express");
+const { ApolloServer, gql } = require("apollo-server-express");
 
-const api = express();
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
 
-api.get("/", (req, res) => {
-  return res.json({ version: "1.0.1" });
-});
+const resolvers = {
+  Query: {
+    hello: () => "world"
+  }
+};
 
-module.exports = api;
+function createApiServer({ dev }) {
+  const app = express();
+
+  const server = new ApolloServer({ typeDefs, resolvers });
+  server.applyMiddleware({ app, path: "/", debug: dev });
+  return app;
+}
+
+module.exports = createApiServer;
