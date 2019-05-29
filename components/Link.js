@@ -7,7 +7,7 @@ function Link({ page, pattern, params = {}, children, ...props } = {}) {
   return (
     <NextLink
       href={createClientRoute(page, params)}
-      as={createServerRoute(pattern, params)}
+      as={createServerRoute(pattern || page, params)}
       {...props}
     >
       <a>{children}</a>
@@ -17,8 +17,8 @@ function Link({ page, pattern, params = {}, children, ...props } = {}) {
 
 Link.propTypes = {
   page: PropTypes.string.isRequired,
-  pattern: PropTypes.string.isRequired,
-  params: PropTypes.object.isRequired,
+  pattern: PropTypes.string,
+  params: PropTypes.object,
   children: PropTypes.node.isRequired
 };
 

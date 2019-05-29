@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should format a dynamic link with parameters 1`] = `
+<a
+  href="/books/12"
+>
+  Book 12
+</a>
+`;
+
+exports[`should render 1`] = `
+<a
+  href="/books"
+>
+  All books
+</a>
+`;

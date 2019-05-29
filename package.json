@@ -8,9 +8,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "concurrently --kill-others \"yarn dev:proxy\" \"yarn dev:api\"",
-    "dev:proxy": "node server.js",
     "dev:api": "nodemon --watch api api-server.js",
-    "start": "NODE_ENV=production node server.js"
+    "dev:proxy": "node server.js",
+    "start": "NODE_ENV=production node server.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "husky": {
     "hooks": {
@@ -38,17 +40,21 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "@types/express": "^4.16.1",
     "@types/express-http-proxy": "^1.5.9",
     "@types/next": "^8.0.5",
     "@types/react": "^16.8.19",
     "concurrently": "^4.1.0",
     "eslint": "^5.16.0",
+    "eslint-plugin-jest": "^22.6.4",
     "eslint-plugin-react": "^7.13.0",
     "husky": "^2.3.0",
+    "jest": "^24.8.0",
     "lint-staged": "^8.1.7",
     "nodemon": "^1.19.1",
     "prettier": "^1.17.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-testing-library": "^7.0.1"
   }
 }
