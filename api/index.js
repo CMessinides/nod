@@ -2,10 +2,8 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
-const Notebooks = require("./stores/Notebooks");
 
 function createApiServer({ dev = false, root = "/" } = {}) {
-  const db = require("./db");
   const path =
     "/" +
     require("url")
@@ -15,13 +13,7 @@ function createApiServer({ dev = false, root = "/" } = {}) {
       .join("/");
   const app = express();
 
-  const context = () => {
-    return {
-      Notebooks: new Notebooks(db)
-    };
-  };
-
-  const server = new ApolloServer({ typeDefs, resolvers, context });
+  const server = new ApolloServer({ typeDefs, resolvers });
   server.applyMiddleware({ app, path, debug: dev });
   return app;
 }

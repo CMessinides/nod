@@ -1,10 +1,12 @@
+const Notebooks = require("../stores/Notebooks");
+
 module.exports = {
   Query: {
-    notebooks(parent, args, context) {
-      return context.Notebooks.all();
+    notebooks() {
+      return Notebooks.all();
     },
-    notebookById(parent, args, context) {
-      return context.Notebooks.getById(args.id);
+    notebookById(parent, args) {
+      return Notebooks.getById(args.id);
     }
   },
   Notebook: {}

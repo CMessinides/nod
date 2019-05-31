@@ -27,7 +27,7 @@ Notebook.getInitialProps = async function({ query }) {
       notebook: notebookById(id: ${query.id}) {
         title
         description
-        created_at
+        createdAt
       }
     }
   `);
@@ -38,7 +38,7 @@ Notebook.propTypes = {
   notebook: PropTypes.shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
-    created_at: PropTypes.number
+    createdAt: PropTypes.number
   }),
   error: PropTypes.object
 };

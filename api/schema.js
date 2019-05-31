@@ -7,7 +7,7 @@ module.exports = gql`
     id: ID!
     title: String!
     description: String
-    created_at: Date!
+    createdAt: Date!
   }
 
   type Query {
