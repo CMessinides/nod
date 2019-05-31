@@ -1,23 +1,28 @@
 const express = require("express");
-const { ApolloServer, gql } = require("apollo-server-express");
+const { ApolloServer } = require("apollo-server-express");
+const typeDefs = require("./schema");
+const resolvers = require("./resolvers");
+const Notebooks = require("./stores/Notebooks");
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => "world"
-  }
-};
-
-function createApiServer({ dev }) {
+function createApiServer({ dev = false, root = "/" } = {}) {
+  const db = require("./db");
+  const path =
+    "/" +
+    require("url")
+      .parse(root)
+      .pathname.split("/")
+      .slice(2)
+      .join("/");
   const app = express();
 
-  const server = new ApolloServer({ typeDefs, resolvers });
-  server.applyMiddleware({ app, path: "/", debug: dev });
+  const context = () => {
+    return {
+      Notebooks: new Notebooks(db)
+    };
+  };
+
+  const server = new ApolloServer({ typeDefs, resolvers, context });
+  server.applyMiddleware({ app, path, debug: dev });
   return app;
 }
 
