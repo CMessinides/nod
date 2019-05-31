@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("isomorphic-fetch");
 const express = require("express");
 const next = require("next");
 const { routes } = require("./routes");

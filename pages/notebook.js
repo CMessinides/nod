@@ -1,18 +1,46 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ApiClient from "../client";
 
-function Notebook({ id }) {
-  return <h1>Notebook {id}</h1>;
+function Notebook({ notebook, error }) {
+  if (error)
+    return (
+      <div>
+        Error: {error.name} - {error.message}
+      </div>
+    );
+
+  if (notebook === null) return <div>Error: No notebook found.</div>;
+
+  return (
+    <div>
+      <h1>{notebook.title}</h1>
+      {notebook.description && <p>{notebook.description}</p>}
+      <time>{new Date(notebook.created_at).toLocaleDateString()}</time>
+    </div>
+  );
 }
 
 Notebook.getInitialProps = async function({ query }) {
-  return {
-    id: query.id
-  };
+  const { data, error } = await ApiClient.query(`
+    query {
+      notebook: notebookById(id: ${query.id}) {
+        title
+        description
+        created_at
+      }
+    }
+  `);
+  return { ...data, error };
 };
 
 Notebook.propTypes = {
-  id: PropTypes.string
+  notebook: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    created_at: PropTypes.number
+  }),
+  error: PropTypes.object
 };
 
 export default Notebook;
