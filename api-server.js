@@ -1,12 +1,10 @@
+require("dotenv").config();
 const createApiServer = require("./api");
+const { dev, apiPort, apiRoot } = require("./config/server.config");
 
-const port = parseInt(process.env.API_PORT, 10) || 3001;
-const dev = process.env.NODE_ENV !== "produciton";
-
-const server = createApiServer({ dev });
-
-server.listen(port, err => {
+const server = createApiServer({ dev, root: apiRoot });
+server.listen(apiPort, err => {
   if (err) throw err;
   // eslint-disable-next-line no-console
-  console.log(`> API server listening on http://localhost:${port}`);
+  console.log(`> API server listening on http://localhost:${apiPort}`);
 });

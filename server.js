@@ -2,10 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const next = require("next");
 const { routes } = require("./routes");
+const { dev, port, apiPort, apiRoot } = require("./config/server.config");
 
-const port = parseInt(process.env.PORT, 10) || 3000;
-const apiRoot = process.env.API_ROOT || "/api";
-const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -15,14 +13,13 @@ app.prepare().then(() => {
   if (dev) {
     // In dev mode, proxy the auto-reloading API server
     const proxy = require("express-http-proxy");
-    const apiPort = parseInt(process.env.API_PORT, 10) || 3001;
     server.use(apiRoot, proxy(`http://localhost:${apiPort}`));
     // eslint-disable-next-line no-console
     console.log(`> Proxying API at http://localhost:${port}${apiRoot}`);
   } else {
     // In production, mount the API server as a sub-app
     const createApiServer = require("./api");
-    server.use(apiRoot, createApiServer());
+    server.use(apiRoot, createApiServer({ dev }));
     // eslint-disable-next-line no-console
     console.log(`> Mounting API at http://localhost:${port}${apiRoot}`);
   }

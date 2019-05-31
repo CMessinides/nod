@@ -1,3 +1,7 @@
 module.exports = {
-  useFileSystemPublicRoutes: false
+  useFileSystemPublicRoutes: false,
+  webpack: (config, { webpack }) => {
+    config.plugins.push(new webpack.EnvironmentPlugin(["API_URL"]));
+    return config;
+  }
 };
