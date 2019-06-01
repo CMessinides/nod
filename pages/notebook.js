@@ -16,21 +16,23 @@ function Notebook({ notebook, error }) {
     <div>
       <h1>{notebook.title}</h1>
       {notebook.description && <p>{notebook.description}</p>}
-      <time>{new Date(notebook.created_at).toLocaleDateString()}</time>
+      <time>{new Date(notebook.createdAt).toLocaleDateString()}</time>
     </div>
   );
 }
 
 Notebook.getInitialProps = async function({ query }) {
-  const { data, error } = await ApiClient.query(`
-    query {
-      notebook: notebookById(id: ${query.id}) {
-        title
-        description
-        createdAt
+  const { data, error } = await ApiClient.request({
+    query: `
+      query {
+        notebook: notebookById(id: ${query.id}) {
+          title
+          description
+          createdAt
+        }
       }
-    }
-  `);
+    `
+  });
   return { ...data, error };
 };
 

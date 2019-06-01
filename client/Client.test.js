@@ -1,4 +1,4 @@
-import GraphQL from "./GraphQL";
+import Client from "./Client";
 import { ErrorType } from "./errors";
 
 const __fetch = global.fetch;
@@ -50,7 +50,7 @@ describe("Error handling", () => {
 
       fetch.mockImplementationOnce(() => Promise[resolveOrReject](fetchValue));
 
-      const { error } = await GraphQL.query();
+      const { error } = await Client.request();
       expect(error.code).toBe(expectedErrorCode);
     }
   );

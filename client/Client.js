@@ -1,4 +1,4 @@
-const config = require("../config/api.config");
+import config from "../config/api.config";
 import {
   NetworkError,
   ResponseError,
@@ -6,18 +6,8 @@ import {
   GraphQLError
 } from "./errors";
 
-const defaultFetchOpts = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  }
-};
-
 export default {
-  async query(query) {
-    return await this.fetchGraphQL({ query });
-  },
-  async fetchGraphQL(body, opts = {}) {
+  async request({ query, variables, options = {} } = {}) {
     const result = {
       data: {},
       error: null
@@ -25,10 +15,17 @@ export default {
 
     let response;
     try {
+      const { headers, ...otherOpts } = options;
       response = await fetch(config.url, {
-        ...defaultFetchOpts,
-        ...opts,
-        body: JSON.stringify(body)
+        ...otherOpts,
+        headers: Object.assign({}, headers, {
+          "Content-Type": "application/json"
+        }),
+        method: "POST",
+        body: JSON.stringify({
+          query,
+          variables: variables ? variables : undefined
+        })
       });
     } catch (error) {
       result.error = NetworkError({ error });

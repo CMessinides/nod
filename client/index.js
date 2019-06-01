@@ -1,2 +1,2 @@
-import GraphQL from "./GraphQL";
-export default GraphQL;
+import Client from "./Client";
+export default Client;
