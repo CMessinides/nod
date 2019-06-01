@@ -7,10 +7,12 @@
   "author": "Cameron Messinides <cameron.messinides@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "next build",
+    "build": "concurrently --kill-others \"yarn migrate up\" \"yarn build:client\" ",
+    "build:client": "next build",
     "dev": "concurrently --kill-others \"yarn dev:proxy\" \"yarn dev:api\"",
     "dev:api": "nodemon --watch api api-server.js",
     "dev:proxy": "node server.js",
+    "migrate": "node-pg-migrate -m db/migrations",
     "start": "NODE_ENV=production node server.js",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -59,6 +61,7 @@
     "husky": "^2.3.0",
     "jest": "^24.8.0",
     "lint-staged": "^8.1.7",
+    "node-pg-migrate": "^3.21.1",
     "nodemon": "^1.19.1",
     "prettier": "^1.17.1",
     "prop-types": "^15.7.2",
