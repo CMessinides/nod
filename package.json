@@ -7,7 +7,7 @@
   "author": "Cameron Messinides <cameron.messinides@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "concurrently --kill-others \"yarn migrate up\" \"yarn build:client\" ",
+    "build": "concurrently \"yarn migrate up\" \"yarn build:client\" ",
     "build:client": "next build",
     "dev": "concurrently --kill-others \"yarn dev:proxy\" \"yarn dev:api\"",
     "dev:api": "nodemon --watch api api-server.js",
