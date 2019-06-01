@@ -7,6 +7,7 @@ function Notebook({ notebook, error }) {
     return (
       <div>
         Error: {error.name} - {error.message}
+        <pre>{JSON.stringify(error, 2)}</pre>
       </div>
     );
 
