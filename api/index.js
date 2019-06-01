@@ -14,7 +14,7 @@ function createApiServer({ dev = false, root = "/" } = {}) {
   const app = express();
 
   const server = new ApolloServer({ typeDefs, resolvers });
-  server.applyMiddleware({ app, path, debug: dev });
+  server.applyMiddleware({ app, path, debug: dev, cors: false });
   return app;
 }
 
