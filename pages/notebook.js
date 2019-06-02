@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ApiClient from "../client";
 import routes from "../config/routes.config";
 import { createServerRoute } from "../lib/routes";
+import ClientOnly from "../components/ClientOnly";
 
 function Notebook({ notebook, error }) {
   useEffect(() => {
@@ -31,7 +32,11 @@ function Notebook({ notebook, error }) {
     <div>
       <h1>{notebook.title}</h1>
       {notebook.description && <p>{notebook.description}</p>}
-      <time>{new Date(notebook.createdAt).toLocaleDateString()}</time>
+      <time>
+        <ClientOnly>
+          {new Date(notebook.createdAt).toLocaleDateString()}
+        </ClientOnly>
+      </time>
     </div>
   );
 }
