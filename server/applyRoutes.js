@@ -26,7 +26,7 @@ function mountOrProxyApi(server) {
     console.log(`> Proxying API at http://localhost:${port}${apiRoot}`);
   } else {
     // In production, mount the API server as a sub-app
-    const createApiServer = require("./api");
+    const createApiServer = require("../api");
     server.use(apiRoot, createApiServer({ dev }));
     // eslint-disable-next-line no-console
     console.log(`> Mounting API at http://localhost:${port}${apiRoot}`);
