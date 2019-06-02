@@ -7,7 +7,7 @@ import ClientOnly from "../components/ClientOnly";
 
 function Notebook({ notebook, error }) {
   useEffect(() => {
-    if (notebook !== undefined) {
+    if (notebook) {
       const path = createServerRoute(routes.notebook, {
         id: notebook.id,
         slug: notebook.slug
