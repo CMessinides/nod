@@ -9,9 +9,9 @@
   "scripts": {
     "build": "concurrently \"yarn migrate up\" \"yarn build:client\" ",
     "build:client": "next build",
-    "dev": "concurrently --kill-others \"yarn dev:proxy\" \"yarn dev:api\"",
-    "dev:api": "nodemon --watch api api-server.js",
-    "dev:proxy": "node server.js",
+    "dev": "concurrently --kill-others \"yarn dev:server\" \"yarn dev:api\"",
+    "dev:api": "nodemon --config nodemon.api.json api-server.js",
+    "dev:server": "nodemon --config nodemon.server.json server.js",
     "migrate": "node-pg-migrate -m db/migrations",
     "seed": "node-pg-migrate -m db/seeds -t pgseeds",
     "start": "NODE_ENV=production node server.js",
