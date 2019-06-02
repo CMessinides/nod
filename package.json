@@ -13,6 +13,7 @@
     "dev:api": "nodemon --watch api api-server.js",
     "dev:proxy": "node server.js",
     "migrate": "node-pg-migrate -m db/migrations",
+    "seed": "node-pg-migrate -m db/seeds -t pgseeds",
     "start": "NODE_ENV=production node server.js",
     "test": "jest",
     "test:watch": "jest --watch"
