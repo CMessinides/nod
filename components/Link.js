@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NextLink from "next/link";
-import { createClientRoute, createServerRoute } from "../routes";
+import { createClientRoute, createServerRoute } from "../lib/routes";
 
 function Link({ page, pattern, params = {}, children, ...props } = {}) {
   return (
