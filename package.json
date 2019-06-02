@@ -28,7 +28,7 @@
       "*.js": [
         "eslint --fix",
         "prettier --write",
-        "jest --findRelatedTests",
+        "jest --bail --findRelatedTests",
         "git add"
       ],
       "*.json": [
