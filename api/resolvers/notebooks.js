@@ -9,5 +9,9 @@ module.exports = {
       return Notebooks.getById(args.id);
     }
   },
-  Notebook: {}
+  Notebook: {
+    slug(parent) {
+      return require("slugify")(parent.title, { lower: true });
+    }
+  }
 };

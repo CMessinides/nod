@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ApiClient from "../client";
+import routes from "../config/routes.config";
+import { createServerRoute } from "../lib/routes";
 
 function Notebook({ notebook, error }) {
+  useEffect(() => {
+    if (notebook !== undefined) {
+      const path = createServerRoute(routes.notebook, {
+        id: notebook.id,
+        slug: notebook.slug
+      });
+      if (window.location.pathname !== path) {
+        window.history.replaceState({}, notebook.title, path);
+      }
+    }
+  }, [notebook]);
+
   if (error)
     return (
       <div>
@@ -27,7 +41,9 @@ Notebook.getInitialProps = async function({ query }) {
     query: `
       query {
         notebook: notebookById(id: ${query.id}) {
+          id
           title
+          slug
           description
           createdAt
         }
@@ -39,7 +55,9 @@ Notebook.getInitialProps = async function({ query }) {
 
 Notebook.propTypes = {
   notebook: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
     description: PropTypes.string,
     createdAt: PropTypes.number
   }),

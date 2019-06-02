@@ -1,3 +1,3 @@
 module.exports = {
-  notebook: "/notebooks/:id"
+  notebook: "/notebooks/:slug--:id"
 };

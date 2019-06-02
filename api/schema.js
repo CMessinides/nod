@@ -6,6 +6,7 @@ module.exports = gql`
   type Notebook {
     id: ID!
     title: String!
+    slug: String!
     description: String
     createdAt: Date!
   }
