@@ -1,48 +1,33 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ApiClient from "../client";
 import routes from "../config/routes.config";
-import { createServerRoute } from "../lib/routes";
+import { replaceOrRedirect } from "../lib/routes";
+import { pick } from "../lib/utils";
 import ClientOnly from "../components/ClientOnly";
+import Router from "next/router";
+import CanError from "../components/CanError";
 
 function Notebook({ notebook, error }) {
-  useEffect(() => {
-    if (notebook) {
-      const path = createServerRoute(routes.notebook, {
-        id: notebook.id,
-        slug: notebook.slug
-      });
-      if (window.location.pathname !== path) {
-        window.history.replaceState({}, notebook.title, path);
-      }
-    }
-  }, [notebook]);
-
-  if (error)
-    return (
-      <div>
-        Error: {error.name} - {error.message}
-        <pre>{JSON.stringify(error, 2)}</pre>
-      </div>
-    );
-
-  if (notebook === null) return <div>Error: No notebook found.</div>;
-
   return (
-    <div>
-      <h1>{notebook.title}</h1>
-      {notebook.description && <p>{notebook.description}</p>}
-      <time>
-        <ClientOnly>
-          {new Date(notebook.createdAt).toLocaleDateString()}
-        </ClientOnly>
-      </time>
-    </div>
+    <CanError error={error}>
+      {() => (
+        <div>
+          <h1>{notebook.title}</h1>
+          {notebook.description && <p>{notebook.description}</p>}
+          <time>
+            <ClientOnly>
+              {new Date(notebook.createdAt).toLocaleDateString()}
+            </ClientOnly>
+          </time>
+        </div>
+      )}
+    </CanError>
   );
 }
 
-Notebook.getInitialProps = async function({ query }) {
-  const { data, error } = await ApiClient.request({
+Notebook.getInitialProps = async function({ query, req, res }) {
+  let { data, error } = await ApiClient.request({
     query: `
       query {
         notebook: notebookById(id: ${query.id}) {
@@ -53,8 +38,20 @@ Notebook.getInitialProps = async function({ query }) {
           createdAt
         }
       }
-    `
+    `,
+    res
   });
+
+  if (data && data.notebook) {
+    replaceOrRedirect({
+      route: routes.notebook,
+      params: pick(data.notebook, ["id", "slug"]),
+      req,
+      res,
+      router: Router
+    });
+  }
+
   return { ...data, error };
 };
 
@@ -66,7 +63,9 @@ Notebook.propTypes = {
     description: PropTypes.string,
     createdAt: PropTypes.number
   }),
-  error: PropTypes.object
+  error: PropTypes.shape({
+    code: PropTypes.string.isRequired
+  })
 };
 
 export default Notebook;

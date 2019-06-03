@@ -1,11 +1,17 @@
 const routes = require("../config/routes.config");
 const { dev, port, apiPort, apiRoot } = require("../config/server.config");
+const { pick } = require("../lib/utils");
 
 module.exports = function applyRoutes({ server, renderer, fallback }) {
   mountOrProxyApi(server);
 
   server.get(routes.notebook, (req, res) => {
-    return renderer.render(req, res, "/notebook", { id: req.params.id });
+    return renderer.render(
+      req,
+      res,
+      "/notebook",
+      pick(req.params, ["id", "slug"])
+    );
   });
 
   server.get("/", (req, res) => {

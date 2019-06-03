@@ -1,56 +1,56 @@
-const ErrorType = {
-  NETWORK: "client/networkError",
-  RESPONSE: "client/responseError",
-  PARSE: "client/parseError",
-  GRAPHQL: "client/graphqlError"
-};
+const { ErrorType } = require("../lib/errors");
 
-class ClientError extends Error {
-  constructor(message, name, code, data) {
-    super();
-    this.message = message;
-    this.name = name;
+class BaseError extends Error {
+  constructor(message, code, properties) {
+    super(message);
     this.code = code;
-    this.data = data;
+
+    if (properties) {
+      Object.keys(properties).forEach(key => {
+        this[key] = properties[key];
+      });
+    }
+
+    if (!this.name) {
+      Object.defineProperty(this, "name", { value: "BaseError" });
+    }
   }
 }
 
-function NetworkError({
-  message = "The API client encountered a network error.",
-  error
-} = {}) {
-  return new ClientError(message, "NetworkError", ErrorType.NETWORK, { error });
+class NetworkError extends BaseError {
+  constructor(message) {
+    super(message, ErrorType.NETWORK);
+
+    Object.defineProperty(this, "name", { value: "NetworkError" });
+  }
 }
 
-function ResponseError({
-  message = "The API client received an error response from the server.",
-  response
-} = {}) {
-  return new ClientError(message, "ResponseError", ErrorType.RESPONSE, {
-    response
-  });
+class ResponseError extends BaseError {
+  constructor(message, status) {
+    super(message, ErrorType.RESPONSE, { status });
+
+    Object.defineProperty(this, "name", { value: "ResponseError" });
+  }
 }
 
-function ParseError({
-  message = "The API client could not parse the server response as JSON.",
-  error
-} = {}) {
-  return new ClientError(message, "ParseError", ErrorType.PARSE, { error });
+class ParseError extends BaseError {
+  constructor(message) {
+    super(message, ErrorType.PARSE);
+  }
 }
 
-function GraphQLError({
-  message = "The API client received errors in the `errors` field of the server response.",
-  errors = []
-} = {}) {
-  return new ClientError(message, "GraphQLError", ErrorType.GRAPHQL, {
-    errors
+function marshalGraphQLError(error) {
+  const code = error.extensions.code || ErrorType.SERVER;
+  return new BaseError(error.message, code, {
+    ...error.extensions,
+    status: error.extensions.exception && error.extensions.exception.status
   });
 }
 
 module.exports = {
-  ErrorType,
+  BaseError,
   NetworkError,
   ResponseError,
   ParseError,
-  GraphQLError
+  marshalGraphQLError
 };

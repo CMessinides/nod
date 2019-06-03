@@ -1,12 +1,19 @@
 const Notebooks = require("../stores/Notebooks");
+const { NotFoundError } = require("../errors");
 
 module.exports = {
   Query: {
     notebooks() {
       return Notebooks.all();
     },
-    notebookById(parent, args) {
-      return Notebooks.getById(args.id);
+    async notebookById(parent, args) {
+      const notebook = await Notebooks.getById(args.id);
+
+      if (notebook === null) {
+        throw new NotFoundError("No notebook found with ID " + args.id);
+      }
+
+      return notebook;
     }
   },
   Notebook: {
