@@ -1,6 +1,7 @@
 const Notes = require("../stores/Notes");
 const Notebooks = require("../stores/Notebooks");
 const { NotFoundError } = require("../errors");
+const sluggable = require("./sluggable");
 
 module.exports = {
   Query: {
@@ -14,12 +15,9 @@ module.exports = {
       return note;
     }
   },
-  Note: {
-    slug(parent) {
-      return require("slugify")(parent.title, { lower: true });
-    },
+  Note: sluggable({
     notebook({ notebookId }) {
       return Notebooks.getById(notebookId);
     }
-  }
+  })
 };
