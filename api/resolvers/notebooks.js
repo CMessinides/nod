@@ -1,4 +1,5 @@
 const Notebooks = require("../stores/Notebooks");
+const Notes = require("../stores/Notes");
 const { NotFoundError } = require("../errors");
 
 module.exports = {
@@ -19,6 +20,9 @@ module.exports = {
   Notebook: {
     slug(parent) {
       return require("slugify")(parent.title, { lower: true });
+    },
+    notes({ id }) {
+      return Notes.getByNotebookId(id);
     }
   }
 };

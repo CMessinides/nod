@@ -1,8 +1,10 @@
 import { Query, Notebook } from "./notebooks";
 import Notebooks from "../stores/Notebooks";
+import Notes from "../stores/Notes";
 import { ErrorType } from "../../lib/errors";
 
 jest.mock("../stores/Notebooks");
+jest.mock("../stores/Notes");
 
 describe("Query", () => {
   describe("notebookById", () => {
@@ -32,6 +34,27 @@ describe("Notebook", () => {
       ["title-with-emoji", "title with emoji 😎"]
     ])("should return %s when the notebook title is %s", (slug, title) => {
       expect(Notebook.slug({ title })).toStrictEqual(slug);
+    });
+  });
+
+  describe("notes", () => {
+    it("should get the notes belonging to the notebook", () => {
+      const MOCK_NOTES = [
+        {
+          id: 1,
+          title: "Note 1"
+        },
+        {
+          id: 2,
+          title: "Note 2"
+        }
+      ];
+
+      Notes.getByNotebookId.mockImplementationOnce(() =>
+        Promise.resolve(MOCK_NOTES)
+      );
+
+      expect(Notebook.notes({ id: 1 })).resolves.toBe(MOCK_NOTES);
     });
   });
 });

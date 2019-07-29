@@ -7,6 +7,7 @@ import { pick } from "../lib/utils";
 import ClientOnly from "../components/ClientOnly";
 import Router from "next/router";
 import CanError from "../components/CanError";
+import Link from "../components/Link";
 
 function Notebook({ notebook, error }) {
   return (
@@ -15,11 +16,45 @@ function Notebook({ notebook, error }) {
         <div>
           <h1>{notebook.title}</h1>
           {notebook.description && <p>{notebook.description}</p>}
-          <time>
-            <ClientOnly>
-              {new Date(notebook.createdAt).toLocaleDateString()}
-            </ClientOnly>
-          </time>
+          <dl>
+            <dt>Created At</dt>
+            <dd>
+              <time>
+                <ClientOnly>
+                  {new Date(notebook.createdAt).toLocaleDateString()}
+                </ClientOnly>
+              </time>
+            </dd>
+          </dl>
+          <ul>
+            {notebook.notes
+              .sort((noteA, noteB) => noteA.modifiedAt - noteB.modifiedAt)
+              .map(note => (
+                <li key={note.id}>
+                  <article>
+                    <h2>
+                      <Link
+                        page="/note"
+                        pattern={routes.note}
+                        params={pick(note, ["id", "slug"])}
+                      >
+                        {note.title}
+                      </Link>
+                    </h2>
+                    <dl>
+                      <dt>Last Modified At</dt>
+                      <dd>
+                        <time>
+                          <ClientOnly>
+                            {new Date(note.modifiedAt).toLocaleString()}
+                          </ClientOnly>
+                        </time>
+                      </dd>
+                    </dl>
+                  </article>
+                </li>
+              ))}
+          </ul>
         </div>
       )}
     </CanError>
@@ -36,6 +71,12 @@ Notebook.getInitialProps = async function({ query, req, res }) {
           slug
           description
           createdAt
+          notes {
+            id
+            title
+            slug
+            modifiedAt
+          }
         }
       }
     `,

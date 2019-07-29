@@ -14,6 +14,10 @@ module.exports = function applyRoutes({ server, renderer, fallback }) {
     );
   });
 
+  server.get(routes.note, (req, res) => {
+    return renderer.render(req, res, "/note", pick(req.params, ["id", "slug"]));
+  });
+
   server.get("/", (req, res) => {
     return renderer.render(req, res, "/index", req.query);
   });
