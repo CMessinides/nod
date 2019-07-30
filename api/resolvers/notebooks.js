@@ -1,6 +1,5 @@
 const Notebooks = require("../stores/Notebooks");
 const Notes = require("../stores/Notes");
-const { NotFoundError } = require("../errors");
 const sluggable = require("./sluggable");
 
 module.exports = {
@@ -8,14 +7,8 @@ module.exports = {
     notebooks() {
       return Notebooks.all();
     },
-    async notebookById(parent, args) {
-      const notebook = await Notebooks.getById(args.id);
-
-      if (notebook === null) {
-        throw new NotFoundError("No notebook found with ID " + args.id);
-      }
-
-      return notebook;
+    notebookById(parent, args) {
+      return Notebooks.getById(args.id);
     }
   },
   Notebook: sluggable({

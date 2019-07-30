@@ -1,6 +1,7 @@
 import Notebooks from "./Notebooks";
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";
+import { ErrorType } from "../../lib/errors";
 jest.mock("../db");
 
 const MOCK_NOTEBOOKS = [
@@ -17,25 +18,41 @@ const MOCK_NOTEBOOKS = [
   }
 ];
 
-it("should get all notebooks", () => {
-  db.query.mockImplementationOnce(() =>
-    Promise.resolve({ rows: MOCK_NOTEBOOKS })
-  );
+describe("all", () => {
+  it("should get all notebooks", () => {
+    db.query.mockImplementationOnce(() =>
+      Promise.resolve({ rows: MOCK_NOTEBOOKS })
+    );
 
-  expect(Notebooks.all()).resolves.toStrictEqual(
-    MOCK_NOTEBOOKS.map(snakeToCamel)
-  );
-  expect(db.query).lastCalledWith("SELECT * FROM notebooks");
+    expect(Notebooks.all()).resolves.toStrictEqual(
+      MOCK_NOTEBOOKS.map(snakeToCamel)
+    );
+    expect(db.query).lastCalledWith("SELECT * FROM notebooks");
+  });
 });
 
-it("should get notebook by ID", () => {
-  const notebook = MOCK_NOTEBOOKS[0];
-  db.query.mockImplementationOnce(() => Promise.resolve({ rows: [notebook] }));
+describe("getById", () => {
+  it("should get notebook by ID", () => {
+    const notebook = MOCK_NOTEBOOKS[0];
+    db.query.mockImplementationOnce(() =>
+      Promise.resolve({ rows: [notebook] })
+    );
 
-  expect(Notebooks.getById(notebook.id)).resolves.toStrictEqual(
-    snakeToCamel(notebook)
-  );
-  expect(db.query).lastCalledWith("SELECT * FROM notebooks WHERE id = $1", [
-    notebook.id
-  ]);
+    expect(Notebooks.getById(notebook.id)).resolves.toStrictEqual(
+      snakeToCamel(notebook)
+    );
+    expect(db.query).lastCalledWith("SELECT * FROM notebooks WHERE id = $1", [
+      notebook.id
+    ]);
+  });
+
+  it("should throw a NotFoundError if no notebook exists", () => {
+    db.query.mockImplementationOnce(() => Promise.resolve({ rows: [] }));
+
+    expect(Notebooks.getById(1)).rejects.toMatchObject({
+      extensions: {
+        code: ErrorType.NOT_FOUND
+      }
+    });
+  });
 });
