@@ -4,10 +4,8 @@ const sluggable = require("./sluggable");
 const nullIfNotFound = require("./nullIfNotFound");
 
 module.exports = {
-  Query: {
-    noteById(parent, args) {
-      return Notes.getById(args.id);
-    }
+  noteById(parent, args) {
+    return Notes.getById(args.id);
   },
   Note: sluggable({
     notebook({ notebookId }) {

@@ -1,13 +1,14 @@
 const { Date } = require("./date");
-const notebooks = require("./notebooks");
-const notes = require("./notes");
+const { notebooks, notebookById, Notebook } = require("./notebooks");
+const { noteById, Note } = require("./notes");
 
 module.exports = {
   Query: {
-    ...notebooks.Query,
-    ...notes.Query
+    notebooks,
+    notebookById,
+    noteById
   },
   Date,
-  Notebook: notebooks.Notebook,
-  Note: notes.Note
+  Notebook,
+  Note
 };

@@ -3,13 +3,11 @@ const Notes = require("../stores/Notes");
 const sluggable = require("./sluggable");
 
 module.exports = {
-  Query: {
-    notebooks() {
-      return Notebooks.all();
-    },
-    notebookById(parent, args) {
-      return Notebooks.getById(args.id);
-    }
+  notebooks() {
+    return Notebooks.all();
+  },
+  notebookById(parent, args) {
+    return Notebooks.getById(args.id);
   },
   Notebook: sluggable({
     notes({ id }) {
