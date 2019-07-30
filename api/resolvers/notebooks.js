@@ -1,6 +1,13 @@
 const Notebooks = require("../stores/Notebooks");
 const Notes = require("../stores/Notes");
 const sluggable = require("./sluggable");
+const { decorate } = require("../../lib/utils");
+
+const Notebook = {
+  notes({ id }) {
+    return Notes.getByNotebookId(id);
+  }
+};
 
 module.exports = {
   notebooks() {
@@ -9,9 +16,5 @@ module.exports = {
   notebookById(parent, args) {
     return Notebooks.getById(args.id);
   },
-  Notebook: sluggable({
-    notes({ id }) {
-      return Notes.getByNotebookId(id);
-    }
-  })
+  Notebook: decorate(Notebook, sluggable)
 };
