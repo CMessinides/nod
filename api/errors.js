@@ -1,5 +1,5 @@
-const { ApolloError } = require("apollo-server-express");
-const { ErrorType, ErrorStatusCodes } = require("../lib/errors.js");
+const { ApolloError } = require("apollo-server-micro");
+const { ErrorType, ErrorStatusCodes } = require("../lib/errors");
 
 class UserInputError extends ApolloError {
   constructor(message, properties) {

@@ -1,18 +1,18 @@
-const Notes = require("../stores/Notes");
-const Notebooks = require("../stores/Notebooks");
-const sluggable = require("./sluggable");
-const nullIfNotFound = require("./nullIfNotFound");
-const { decorate } = require("../../lib/utils");
+import Notes from "../stores/Notes";
+import Notebooks from "../stores/Notebooks";
+import sluggable from "./sluggable";
+import nullIfNotFound from "./nullIfNotFound";
+import { decorate } from "../../lib/utils";
 
-const Note = {
-  notebook({ notebookId }) {
-    return nullIfNotFound(Notebooks.getById(notebookId));
-  }
-};
+export function noteById(parent, args) {
+  return Notes.getById(args.id);
+}
 
-module.exports = {
-  noteById(parent, args) {
-    return Notes.getById(args.id);
+export const Note = decorate(
+  {
+    notebook({ notebookId }) {
+      return nullIfNotFound(Notebooks.getById(notebookId));
+    }
   },
-  Note: decorate(Note, sluggable)
-};
+  sluggable
+);

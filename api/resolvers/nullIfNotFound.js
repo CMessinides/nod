@@ -1,6 +1,6 @@
-const { ErrorType } = require("../../lib/errors");
+import { ErrorType } from "../../lib/errors";
 
-module.exports = async function nullIfNotFound(promise) {
+export default async function nullIfNotFound(promise) {
   try {
     return await promise;
   } catch (e) {
@@ -11,4 +11,4 @@ module.exports = async function nullIfNotFound(promise) {
         throw e;
     }
   }
-};
+}

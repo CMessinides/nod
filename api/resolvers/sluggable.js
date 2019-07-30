@@ -1,7 +1,9 @@
-module.exports = function sluggable(type) {
+import slugify from "slugify";
+
+export default function sluggable(type) {
   type.slug = function slug(parent) {
-    return require("slugify")(parent.title, { lower: true });
+    return slugify(parent.title, { lower: true });
   };
 
   return type;
-};
+}

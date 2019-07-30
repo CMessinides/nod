@@ -1,20 +1,21 @@
-const Notebooks = require("../stores/Notebooks");
-const Notes = require("../stores/Notes");
-const sluggable = require("./sluggable");
-const { decorate } = require("../../lib/utils");
+import Notebooks from "../stores/Notebooks";
+import Notes from "../stores/Notes";
+import sluggable from "./sluggable";
+import { decorate } from "../../lib/utils";
 
-const Notebook = {
-  notes({ id }) {
-    return Notes.getByNotebookId(id);
-  }
-};
+export function notebooks() {
+  return Notebooks.all();
+}
 
-module.exports = {
-  notebooks() {
-    return Notebooks.all();
+export function notebookById(parent, args) {
+  return Notebooks.getById(args.id);
+}
+
+export const Notebook = decorate(
+  {
+    notes({ id }) {
+      return Notes.getByNotebookId(id);
+    }
   },
-  notebookById(parent, args) {
-    return Notebooks.getById(args.id);
-  },
-  Notebook: decorate(Notebook, sluggable)
-};
+  sluggable
+);

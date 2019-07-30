@@ -1,6 +1,0 @@
-{
-  "restartable": "rss",
-  "ignore": ["**/*.test.js"],
-  "watch": ["server/", "config/"],
-  "ext": "js"
-}

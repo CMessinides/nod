@@ -1,4 +1,4 @@
-const sluggable = require("./sluggable");
+import sluggable from "./sluggable";
 
 it("should decorate the provided type with a slug method", () => {
   expect(typeof sluggable({}).slug).toBe("function");

@@ -1,6 +1,0 @@
-{
-  "restartable": "rsa",
-  "ignore": ["**/*.test.js"],
-  "watch": ["api/", "config/"],
-  "ext": "js"
-}
