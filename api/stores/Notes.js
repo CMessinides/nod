@@ -1,6 +1,13 @@
-const db = require("../db");
-const { snakeToCamel } = require("../db/transformers");
-const { NotFoundError } = require("../errors");
+import db from "../db";
+import { snakeToCamel } from "../db/transformers";
+import { NotFoundError } from "../errors";
+import { pipe } from "lodash/fp";
+import { makeSluggable } from "../../lib/slugs";
+
+const prepareNote = pipe(
+  snakeToCamel,
+  makeSluggable
+);
 
 module.exports = {
   async getById(id) {
@@ -11,13 +18,13 @@ module.exports = {
       throw new NotFoundError("No note found with ID " + id);
     }
 
-    return snakeToCamel(note);
+    return prepareNote(note);
   },
   async getByNotebookId(id) {
     const { rows } = await db.query(
       "SELECT * FROM notes WHERE notebook_id = $1",
       [id]
     );
-    return rows.map(snakeToCamel);
+    return rows.map(prepareNote);
   }
 };
