@@ -7,6 +7,8 @@ import Link from "next/link";
 import { NextPage } from "next";
 import Error from "next/error";
 import { Notebook, ApiResource } from "../../../lib/types";
+import { isSlug, getIdFromSlug } from "../../../lib/slugs";
+import { redirectIfNecessary } from "../../../lib/routes";
 
 interface QueryData {
 	notebook: Notebook;
@@ -39,8 +41,8 @@ const NotebookPage: NextPage<Props> = ({ error, notebook }) => {
 								<article>
 									<h2>
 										<Link
-											href={"/notebooks/[id]/notes/[id]"}
-											as={`/notebooks/${notebook.id}/notes/${note.id}`}
+											href={"/notebooks/[slug]/notes/[slug]"}
+											as={`/notebooks/${notebook.slug}/notes/${note.slug}`}
 										>
 											<a>{note.title}</a>
 										</Link>
@@ -64,17 +66,29 @@ const NotebookPage: NextPage<Props> = ({ error, notebook }) => {
 	}
 };
 
-NotebookPage.getInitialProps = async function({ query, res }) {
+const notFoundError = new ResponseError(
+	"That notebook doesn't appear to exist.",
+	404
+);
+NotebookPage.getInitialProps = async function({ query, req, res }) {
+	if (!isSlug(query.slug as string)) {
+		if (res) res.statusCode = 404;
+		return { error: notFoundError };
+	}
+
+	const id = getIdFromSlug(query.slug as string);
 	let { data, error } = await ApiClient.request<QueryData>({
 		query: `
       query {
-        notebook: notebookById(id: ${query.id}) {
-          id
+        notebook: notebookById(id: ${id}) {
+					id
+					slug
           title
           description
           createdAt
           notes {
-            id
+						id
+						slug
             title
             modifiedAt
           }
@@ -84,12 +98,19 @@ NotebookPage.getInitialProps = async function({ query, res }) {
 		res
 	});
 
-	if (!error && (data as QueryData).notebook === null) {
-		res.statusCode = 404;
-		error = new ResponseError("No notebook found with ID " + query.id, 404);
+	const { notebook } = data as QueryData;
+	if (notebook === null) {
+		if (res) res.statusCode = 404;
+		return { error: notFoundError };
 	}
 
-	return { ...data, error };
+	redirectIfNecessary({
+		url: `/notebooks/${notebook.slug}`,
+		req,
+		res
+	});
+
+	return { notebook, error };
 };
 
 export default NotebookPage;

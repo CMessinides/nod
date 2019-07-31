@@ -1,6 +1,7 @@
 export interface Note {
 	id: number;
 	title: string;
+	slug: string;
 	createdAt: number;
 	modifiedAt: number;
 	notebook: Notebook;
@@ -9,6 +10,7 @@ export interface Note {
 export interface Notebook {
 	id: number;
 	title: string;
+	slug: string;
 	description: string | null;
 	createdAt: number;
 	notes: Note[];

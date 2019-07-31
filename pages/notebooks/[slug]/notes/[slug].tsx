@@ -6,6 +6,8 @@ import Error from "next/error";
 import { NextPage } from "next";
 import { ApiResource, Note } from "../../../../lib/types";
 import { ResponseError } from "../../../../client/errors";
+import { isSlug, getIdFromSlug } from "../../../../lib/slugs";
+import { redirectIfNecessary } from "../../../../lib/routes";
 
 interface QueryData {
 	note: Note;
@@ -22,7 +24,10 @@ const NotePage: NextPage<Props> = ({ note, error }) => {
 				<dl>
 					<dt>Notebook</dt>
 					<dd>
-						<Link href="/notebooks/[id]" as={`/notebooks/${note.notebook.id}`}>
+						<Link
+							href="/notebooks/[slug]"
+							as={`/notebooks/${note.notebook.slug}`}
+						>
 							<a>{note.notebook.title}</a>
 						</Link>
 					</dd>
@@ -38,11 +43,21 @@ const NotePage: NextPage<Props> = ({ note, error }) => {
 	}
 };
 
-NotePage.getInitialProps = async function({ query, res }) {
+const notFoundError = new ResponseError(
+	"That note doesn't appear to exist",
+	404
+);
+NotePage.getInitialProps = async function({ query, req, res }) {
+	if (!isSlug(query.slug as string)) {
+		if (res) res.statusCode = 404;
+		return { error: notFoundError };
+	}
+
+	const id = getIdFromSlug(query.slug as string);
 	let { data, error } = await ApiClient.request<QueryData>({
 		query: `
 			query {
-				note: noteById(id: ${query.id}) {
+				note: noteById(id: ${id}) {
 					id
 					title
 					slug
@@ -58,12 +73,19 @@ NotePage.getInitialProps = async function({ query, res }) {
 		res
 	});
 
-	if (!error && (data as QueryData).note === null) {
-		res.statusCode = 404;
-		error = new ResponseError("No note found with ID " + query.id, 404);
+	const { note } = data as QueryData;
+	if (note === null) {
+		if (res) res.statusCode = 404;
+		return { error: notFoundError };
 	}
 
-	return { ...data, error };
+	redirectIfNecessary({
+		url: `/notebooks/${note.notebook.slug}/notes/${note.slug}`,
+		req,
+		res
+	});
+
+	return { note, error };
 };
 
 export default NotePage;
