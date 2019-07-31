@@ -1,7 +1,6 @@
 import Notebooks from "./Notebooks";
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";
-import { ErrorType } from "../../lib/errors";
 jest.mock("../db");
 
 const MOCK_NOTEBOOKS = [
@@ -46,13 +45,9 @@ describe("getById", () => {
     ]);
   });
 
-  it("should throw a NotFoundError if no notebook exists", () => {
+  it("should return null if no notebook exists", () => {
     db.query.mockImplementationOnce(() => Promise.resolve({ rows: [] }));
 
-    expect(Notebooks.getById(1)).rejects.toMatchObject({
-      extensions: {
-        code: ErrorType.NOT_FOUND
-      }
-    });
+    expect(Notebooks.getById(1)).resolves.toBe(null);
   });
 });

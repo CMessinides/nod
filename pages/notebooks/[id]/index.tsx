@@ -1,6 +1,7 @@
 import "isomorphic-fetch";
 import React from "react";
 import ApiClient from "../../../client";
+import { ResponseError } from "../../../client/errors";
 import ClientOnly from "../../../components/ClientOnly";
 import Link from "next/link";
 import { NextPage } from "next";
@@ -82,6 +83,11 @@ NotebookPage.getInitialProps = async function({ query, res }) {
     `,
 		res
 	});
+
+	if (!error && (data as QueryData).notebook === null) {
+		res.statusCode = 404;
+		error = new ResponseError("No notebook found with ID " + query.id, 404);
+	}
 
 	return { ...data, error };
 };

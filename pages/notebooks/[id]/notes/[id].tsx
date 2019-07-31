@@ -5,6 +5,7 @@ import Link from "next/link";
 import Error from "next/error";
 import { NextPage } from "next";
 import { ApiResource, Note } from "../../../../lib/types";
+import { ResponseError } from "../../../../client/errors";
 
 interface QueryData {
 	note: Note;
@@ -56,6 +57,11 @@ NotePage.getInitialProps = async function({ query, res }) {
 		`,
 		res
 	});
+
+	if (!error && (data as QueryData).note === null) {
+		res.statusCode = 404;
+		error = new ResponseError("No note found with ID " + query.id, 404);
+	}
 
 	return { ...data, error };
 };

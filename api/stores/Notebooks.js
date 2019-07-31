@@ -1,6 +1,5 @@
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";
-import { NotFoundError } from "../errors";
 import { pipe } from "lodash/fp";
 import { makeSluggable } from "../../lib/slugs";
 
@@ -19,12 +18,6 @@ export default {
       id
     ]);
 
-    const notebook = rows[0];
-
-    if (!notebook) {
-      throw new NotFoundError("No notebook found with ID " + id);
-    }
-
-    return prepareNotebook(notebook);
+    return rows[0] ? prepareNotebook(rows[0]) : null;
   }
 };

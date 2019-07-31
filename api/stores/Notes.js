@@ -1,6 +1,5 @@
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";
-import { NotFoundError } from "../errors";
 import { pipe } from "lodash/fp";
 import { makeSluggable } from "../../lib/slugs";
 
@@ -12,13 +11,7 @@ const prepareNote = pipe(
 module.exports = {
   async getById(id) {
     const { rows } = await db.query("SELECT * FROM notes WHERE id = $1", [id]);
-
-    const note = rows[0];
-    if (!note) {
-      throw new NotFoundError("No note found with ID " + id);
-    }
-
-    return prepareNote(note);
+    return rows[0] ? prepareNote(rows[0]) : null;
   },
   async getByNotebookId(id) {
     const { rows } = await db.query(

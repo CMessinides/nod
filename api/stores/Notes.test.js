@@ -30,6 +30,12 @@ it("should get note by ID", () => {
   ]);
 });
 
+it("should get return null if no note exists", () => {
+  db.query.mockImplementationOnce(() => Promise.resolve({ rows: [] }));
+
+  expect(Notes.getById(1)).resolves.toBe(null);
+});
+
 it("should get notes by notebook ID", () => {
   const notebookId = 1;
   const notes = MOCK_NOTES.filter(note => note.notebook_id === notebookId);
