@@ -22,20 +22,20 @@ const MOCK_NOTES = [
 
 const MOCK_CONTENT = [
   {
-    id: 1,
-    note_id: 1,
-    type: "text_content",
-    prev_chunk_id: null,
-    name: null,
-    text: "lorem ipsum"
-  },
-  {
     id: 2,
     note_id: 1,
     type: "task_list",
     prev_chunk_id: 1,
     name: "Chores",
     text: null
+  },
+  {
+    id: 1,
+    note_id: 1,
+    type: "text_content",
+    prev_chunk_id: null,
+    name: null,
+    text: "lorem ipsum"
   }
 ];
 

@@ -1,7 +1,6 @@
 import { noteById, Note } from "./notes";
 import Notes from "../stores/Notes";
 import Notebooks from "../stores/Notebooks";
-import { NotFoundError } from "../errors";
 import MOCK_NOTES from "../stores/fixtures/notes";
 import MOCK_NOTEBOOKS from "../stores/fixtures/notebooks";
 
@@ -32,9 +31,7 @@ describe("Note", () => {
     });
 
     it("should return null if the notebook does not exist", () => {
-      Notebooks.getById.mockImplementationOnce(() =>
-        Promise.reject(new NotFoundError())
-      );
+      Notebooks.getById.mockImplementationOnce(() => Promise.resolve(null));
 
       expect(Note.notebook({ notebookId: 1 })).resolves.toBe(null);
     });

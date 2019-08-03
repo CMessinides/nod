@@ -20,20 +20,17 @@ export default gql`
   interface NoteChunk {
     id: ID!
     type: NoteChunkType!
-    prevChunkId: ID
   }
 
   type NoteText implements NoteChunk {
     id: ID!
     type: NoteChunkType!
-    prevChunkId: ID
     text: String!
   }
 
   type NoteTaskList implements NoteChunk {
     id: ID!
     type: NoteChunkType!
-    prevChunkId: ID
     name: String!
   }
 

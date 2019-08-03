@@ -3,6 +3,7 @@ import { snakeToCamel } from "../db/transformers";
 import { pipe } from "lodash/fp";
 import { makeSluggable } from "../../lib/slugs";
 import { pick } from "../../lib/utils";
+import { sortLinkedList } from "../../lib/linkedList";
 
 const prepareNote = pipe(
   snakeToCamel,
@@ -32,7 +33,9 @@ async function getContent(note) {
     [note.id]
   );
 
-  note.content = rows.map(prepareContentChunk);
+  note.content = sortLinkedList(rows.map(prepareContentChunk), {
+    prevIdKey: "prevChunkId"
+  });
   return note;
 }
 
