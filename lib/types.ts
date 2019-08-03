@@ -7,8 +7,8 @@ export interface Task {
 }
 
 export enum NoteChunkType {
-	TASK_LIST,
-	TEXT_CONTENT
+	TASK_LIST = "TASK_LIST",
+	TEXT_CONTENT = "TEXT_CONTENT"
 }
 
 export interface NoteChunk {
@@ -25,7 +25,7 @@ export interface TaskList extends NoteChunk {
 
 export interface TextContent extends NoteChunk {
 	type: NoteChunkType.TEXT_CONTENT;
-	content: string;
+	text: string;
 }
 
 export interface Note {
@@ -35,7 +35,7 @@ export interface Note {
 	createdAt: number;
 	modifiedAt: number;
 	notebook: Notebook;
-	body: NoteChunk[];
+	content: NoteChunk[];
 }
 
 export interface Notebook {

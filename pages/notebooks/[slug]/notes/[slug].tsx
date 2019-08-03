@@ -4,7 +4,14 @@ import ClientOnly from "../../../../components/ClientOnly";
 import Link from "next/link";
 import Error from "next/error";
 import { NextPage } from "next";
-import { ApiResource, Note } from "../../../../lib/types";
+import {
+	ApiResource,
+	Note,
+	NoteChunk,
+	TaskList,
+	TextContent,
+	NoteChunkType
+} from "../../../../lib/types";
 import { ResponseError } from "../../../../client/errors";
 import { isSlug, getIdFromSlug } from "../../../../lib/slugs";
 import { redirectIfNecessary } from "../../../../lib/routes";
@@ -13,6 +20,32 @@ interface QueryData {
 	note: Note;
 }
 type Props = ApiResource<QueryData>;
+
+const Tasks: React.FC<TaskList> = ({ name }) => {
+	return (
+		<>
+			<h2>{name}</h2>
+			<div>
+				<small>Tasks coming soon!</small>
+			</div>
+		</>
+	);
+};
+
+const Text: React.FC<TextContent> = ({ text }) => {
+	return <p>{text}</p>;
+};
+
+const ContentChunk: React.FC<NoteChunk> = chunk => {
+	switch (chunk.type) {
+		case NoteChunkType.TASK_LIST:
+			return <Tasks {...(chunk as TaskList)} />;
+		case NoteChunkType.TEXT_CONTENT:
+			return <Text {...(chunk as TextContent)} />;
+		default:
+			return null;
+	}
+};
 
 const NotePage: NextPage<Props> = ({ note, error }) => {
 	if (error !== null) {
@@ -38,6 +71,11 @@ const NotePage: NextPage<Props> = ({ note, error }) => {
 						</ClientOnly>
 					</dd>
 				</dl>
+				<div>
+					{note.content.map(chunk => (
+						<ContentChunk key={chunk.id} {...chunk} />
+					))}
+				</div>
 			</div>
 		);
 	}
@@ -66,6 +104,16 @@ NotePage.getInitialProps = async function({ query, req, res }) {
 						id
 						title
 						slug
+					}
+					content {
+						id
+						type
+						...on NoteTaskList {
+							name
+						}
+						...on NoteText {
+							text
+						}
 					}
 				}
 			}
