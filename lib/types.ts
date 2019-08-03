@@ -1,3 +1,33 @@
+export interface Task {
+	id: number;
+	name: string;
+	createdAt: number;
+	done: boolean;
+	list: TaskList;
+}
+
+export enum NoteChunkType {
+	TASK_LIST,
+	TEXT_CONTENT
+}
+
+export interface NoteChunk {
+	type: NoteChunkType;
+	id: number;
+	note: Note;
+}
+
+export interface TaskList extends NoteChunk {
+	type: NoteChunkType.TASK_LIST;
+	name: string;
+	tasks: Task[];
+}
+
+export interface TextContent extends NoteChunk {
+	type: NoteChunkType.TEXT_CONTENT;
+	content: string;
+}
+
 export interface Note {
 	id: number;
 	title: string;
@@ -5,6 +35,7 @@ export interface Note {
 	createdAt: number;
 	modifiedAt: number;
 	notebook: Notebook;
+	body: NoteChunk[];
 }
 
 export interface Notebook {
