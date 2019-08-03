@@ -12,6 +12,31 @@ export default gql`
     notes: [Note]
   }
 
+  enum NoteChunkType {
+    TEXT_CONTENT
+    TASK_LIST
+  }
+
+  interface NoteChunk {
+    id: ID!
+    type: NoteChunkType!
+    prevChunkId: ID
+  }
+
+  type NoteText implements NoteChunk {
+    id: ID!
+    type: NoteChunkType!
+    prevChunkId: ID
+    text: String!
+  }
+
+  type NoteTaskList implements NoteChunk {
+    id: ID!
+    type: NoteChunkType!
+    prevChunkId: ID
+    name: String!
+  }
+
   type Note {
     id: ID!
     title: String!
@@ -19,6 +44,7 @@ export default gql`
     createdAt: Date!
     modifiedAt: Date!
     notebook: Notebook!
+    content: [NoteChunk]!
   }
 
   type Query {
