@@ -5,7 +5,7 @@ exports.up = pgm => {
 		BEGIN TRANSACTION;
 			WITH chunk AS (
 				INSERT INTO note_chunks (type, note_id)
-				VALUES ('task_list', 1)
+				VALUES ('TASK_LIST', 1)
 				RETURNING id
 			)
 			INSERT INTO note_task_list_chunks (id, name)
@@ -13,7 +13,7 @@ exports.up = pgm => {
 
 			WITH chunk AS (
 				INSERT INTO note_chunks (type, note_id, prev_chunk_id)
-				VALUES ('text_content', 1, 1)
+				VALUES ('TEXT_CONTENT', 1, 1)
 				RETURNING id
 			)
 			INSERT INTO note_text_content_chunks (id, text)
@@ -21,7 +21,7 @@ exports.up = pgm => {
 
 			WITH chunk AS (
 				INSERT INTO note_chunks (type, note_id)
-				VALUES ('text_content', 2)
+				VALUES ('TEXT_CONTENT', 2)
 				RETURNING id
 			)
 			INSERT INTO note_text_content_chunks (id, text)
@@ -29,7 +29,7 @@ exports.up = pgm => {
 
 			WITH chunk AS (
 				INSERT INTO note_chunks (type, note_id, prev_chunk_id)
-				VALUES ('task_list', 2, 3)
+				VALUES ('TASK_LIST', 2, 3)
 				RETURNING id
 			)
 			INSERT INTO note_task_list_chunks (id, name)
@@ -37,7 +37,7 @@ exports.up = pgm => {
 
 			WITH chunk AS (
 				INSERT INTO note_chunks (type, note_id, prev_chunk_id)
-				VALUES ('text_content', 2, 4)
+				VALUES ('TEXT_CONTENT', 2, 4)
 				RETURNING id
 			)
 			INSERT INTO note_text_content_chunks (id, text)

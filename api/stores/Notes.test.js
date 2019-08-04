@@ -1,6 +1,7 @@
 import Notes from "./Notes";
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";
+import { NoteChunkType } from "../../lib/types";
 jest.mock("../db");
 
 const MOCK_NOTES = [
@@ -24,7 +25,7 @@ const MOCK_CONTENT = [
   {
     id: 2,
     note_id: 1,
-    type: "task_list",
+    type: NoteChunkType.TASK_LIST,
     prev_chunk_id: 1,
     name: "Chores",
     text: null
@@ -32,7 +33,7 @@ const MOCK_CONTENT = [
   {
     id: 1,
     note_id: 1,
-    type: "text_content",
+    type: NoteChunkType.TEXT_CONTENT,
     prev_chunk_id: null,
     name: null,
     text: "lorem ipsum"
@@ -58,13 +59,13 @@ it("should get note by ID", async () => {
     content: [
       {
         id: 1,
-        type: "text_content",
+        type: NoteChunkType.TEXT_CONTENT,
         prevChunkId: null,
         text: "lorem ipsum"
       },
       {
         id: 2,
-        type: "task_list",
+        type: NoteChunkType.TASK_LIST,
         prevChunkId: 1,
         name: "Chores"
       }

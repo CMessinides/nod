@@ -4,6 +4,7 @@ import { pipe } from "lodash/fp";
 import { makeSluggable } from "../../lib/slugs";
 import { pick } from "../../lib/utils";
 import { sortLinkedList } from "../../lib/linkedList";
+import { NoteChunkType } from "../../lib/types";
 
 const prepareNote = pipe(
   snakeToCamel,
@@ -18,9 +19,9 @@ const prepareContentChunk = pipe(
 const SHARED_CHUNK_KEYS = ["id", "type", "prevChunkId"];
 function formatChunkByType(chunk) {
   switch (chunk.type) {
-    case "task_list":
+    case NoteChunkType.TASK_LIST:
       return pick(chunk, "name", ...SHARED_CHUNK_KEYS);
-    case "text_content":
+    case NoteChunkType.TEXT_CONTENT:
       return pick(chunk, "text", ...SHARED_CHUNK_KEYS);
     default:
       throw new Error("Unrecognized content chunk type: " + chunk.type);

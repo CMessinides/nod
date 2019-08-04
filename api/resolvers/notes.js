@@ -1,5 +1,6 @@
 import Notes from "../stores/Notes";
 import Notebooks from "../stores/Notebooks";
+import { NoteChunkType } from "../../lib/types";
 
 export function noteById(parent, args) {
   return Notes.getById(args.id);
@@ -14,17 +15,12 @@ export const Note = {
 export const NoteChunk = {
   __resolveType(chunk) {
     switch (chunk.type) {
-      case "text_content":
+      case NoteChunkType.TEXT_CONTENT:
         return "NoteText";
-      case "task_list":
+      case NoteChunkType.TASK_LIST:
         return "NoteTaskList";
       default:
         return null;
     }
   }
-};
-
-export const NoteChunkType = {
-  TASK_LIST: "task_list",
-  TEXT_CONTENT: "text_content"
 };
