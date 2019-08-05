@@ -1,5 +1,6 @@
 import Notes from "../stores/Notes";
 import Notebooks from "../stores/Notebooks";
+import * as Tasks from "../stores/Tasks";
 import { NoteChunkType } from "../../lib/types";
 
 export function noteById(parent, args) {
@@ -22,5 +23,11 @@ export const NoteChunk = {
       default:
         return null;
     }
+  }
+};
+
+export const NoteTaskList = {
+  tasks({ id }) {
+    return Tasks.getAllInList(id);
   }
 };

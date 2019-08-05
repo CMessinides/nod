@@ -28,10 +28,18 @@ export default gql`
     text: String!
   }
 
+  type Task {
+    id: ID!
+    name: String!
+    done: Boolean!
+    createdAt: Date!
+  }
+
   type NoteTaskList implements NoteChunk {
     id: ID!
     type: NoteChunkType!
     name: String!
+    tasks: [Task]!
   }
 
   type Note {

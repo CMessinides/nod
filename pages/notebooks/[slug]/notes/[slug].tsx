@@ -21,13 +21,22 @@ interface QueryData {
 }
 type Props = ApiResource<QueryData>;
 
-const Tasks: React.FC<TaskList> = ({ name }) => {
+const Tasks: React.FC<TaskList> = ({ name, tasks }) => {
 	return (
 		<>
 			<h2>{name}</h2>
-			<div>
-				<small>Tasks coming soon!</small>
-			</div>
+			<ul>
+				{tasks.map(task => (
+					<li key={task.id}>
+						<input
+							id={`__task-${task.id}`}
+							type="checkbox"
+							defaultChecked={task.done}
+						/>
+						<label htmlFor={`__task-${task.id}`}>{task.name}</label>
+					</li>
+				))}
+			</ul>
 		</>
 	);
 };
@@ -110,6 +119,11 @@ NotePage.getInitialProps = async function({ query, req, res }) {
 						type
 						...on NoteTaskList {
 							name
+							tasks {
+								id
+								name
+								done
+							}
 						}
 						...on NoteText {
 							text

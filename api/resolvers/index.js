@@ -1,6 +1,6 @@
 import { Date } from "./date";
 import { notebooks, notebookById, Notebook } from "./notebooks";
-import { noteById, Note, NoteChunk } from "./notes";
+import { noteById, Note, NoteChunk, NoteTaskList } from "./notes";
 
 export default {
   Query: {
@@ -11,5 +11,6 @@ export default {
   Date,
   Notebook,
   Note,
-  NoteChunk
+  NoteChunk,
+  NoteTaskList
 };
