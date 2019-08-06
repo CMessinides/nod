@@ -1,11 +1,11 @@
 {
-  "presets": [
-    [
-      "next/babel",
-      {
-        "preset-env": { "targets": { "node": "current" } }
-      }
-    ]
-  ],
-  "plugins": []
+	"presets": [
+		[
+			"next/babel",
+			{
+				"preset-env": { "targets": { "node": "current" } }
+			}
+		]
+	],
+	"plugins": []
 }

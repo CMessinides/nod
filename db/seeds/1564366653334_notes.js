@@ -1,7 +1,7 @@
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 			INSERT INTO notes (title, notebook_id)
 			VALUES
 					('Generic note', 1),
@@ -11,7 +11,7 @@ exports.up = pgm => {
 };
 
 exports.down = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		DELETE FROM notes;
 	`);
 };

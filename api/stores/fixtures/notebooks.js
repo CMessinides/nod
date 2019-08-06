@@ -9,25 +9,25 @@
 let idCounter = 0;
 
 function randomDate(spread = 36000) {
-  return new Date(Date.now() - Math.random() * spread);
+	return new Date(Date.now() - Math.random() * spread);
 }
 
 /**
  * @returns {Notebook}
  */
 function createMockNotebook() {
-  return {
-    id: idCounter++,
-    title: "Notebook Title",
-    description: "This is a notebook description.",
-    createdAt: randomDate()
-  };
+	return {
+		id: idCounter++,
+		title: "Notebook Title",
+		description: "This is a notebook description.",
+		createdAt: randomDate()
+	};
 }
 
 /** @type {Notebook[]} */
 const notebooks = [];
 for (let i = 0; i < 20; i++) {
-  notebooks.push(createMockNotebook());
+	notebooks.push(createMockNotebook());
 }
 
 module.exports = notebooks;

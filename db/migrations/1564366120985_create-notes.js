@@ -1,7 +1,7 @@
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		CREATE TABLE notes (
 			id serial PRIMARY KEY,
 			title VARCHAR(255) NOT NULL,
@@ -13,7 +13,7 @@ exports.up = pgm => {
 };
 
 exports.down = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		DROP TABLE notes;
 	`);
 };

@@ -1,7 +1,7 @@
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		CREATE TYPE note_chunk_type AS ENUM ('TASK_LIST', 'TEXT_CONTENT');
 		CREATE TABLE note_chunks (
 			id SERIAL PRIMARY KEY,
@@ -32,7 +32,7 @@ exports.up = pgm => {
 };
 
 exports.down = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		DROP TABLE note_text_content_chunks;
 		DROP TABLE tasks;
 		DROP TABLE note_task_list_chunks;

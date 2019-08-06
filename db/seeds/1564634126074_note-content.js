@@ -1,7 +1,7 @@
 exports.shorthands = undefined;
 
 exports.up = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		BEGIN TRANSACTION;
 			WITH chunk AS (
 				INSERT INTO note_chunks (type, note_id)
@@ -57,7 +57,7 @@ exports.up = pgm => {
 };
 
 exports.down = pgm => {
-  pgm.sql(`
+	pgm.sql(`
 		DELETE FROM note_chunks;
 		ALTER SEQUENCE note_chunks_id_seq RESTART WITH 1;
 	`);
