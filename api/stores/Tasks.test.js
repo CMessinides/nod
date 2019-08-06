@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { getAllInList } from "./Tasks";
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";

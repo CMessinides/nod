@@ -27,7 +27,7 @@ export const NoteChunk = {
 };
 
 export const NoteTaskList = {
-	tasks({ id }) {
-		return Tasks.getAllInList(id);
+	tasks({ listId }) {
+		return Tasks.getAllInList(listId);
 	}
 };

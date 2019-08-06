@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import Notes from "./Notes";
 import db from "../db";
 import { snakeToCamel } from "../db/transformers";
@@ -28,6 +30,7 @@ const MOCK_CONTENT = [
 		type: NoteChunkType.TASK_LIST,
 		prev_chunk_id: 1,
 		name: "Chores",
+		list_id: 1,
 		text: null
 	},
 	{
@@ -35,6 +38,7 @@ const MOCK_CONTENT = [
 		note_id: 1,
 		type: NoteChunkType.TEXT_CONTENT,
 		prev_chunk_id: null,
+		list_id: null,
 		name: null,
 		text: "lorem ipsum"
 	}
@@ -67,7 +71,8 @@ it("should get note by ID", async () => {
 				id: 2,
 				type: NoteChunkType.TASK_LIST,
 				prevChunkId: 1,
-				name: "Chores"
+				name: "Chores",
+				listId: 1
 			}
 		]
 	});
@@ -77,7 +82,7 @@ it("should get note by ID", async () => {
 	]);
 	expect(db.query).nthCalledWith(
 		2,
-		"SELECT note_chunks.id, prev_chunk_id, type, name, text FROM note_chunks FULL JOIN note_text_content_chunks ON note_chunks.id = note_text_content_chunks.id FULL JOIN note_task_list_chunks ON note_chunks.id = note_task_list_chunks.id WHERE note_id = $1",
+		"SELECT note_chunks.id, prev_chunk_id, type, name, list_id, text FROM note_chunks FULL JOIN note_text_content_chunks ON note_chunks.id = note_text_content_chunks.id FULL JOIN (SELECT note_task_list_chunks.id, list_id, name FROM note_task_list_chunks JOIN task_lists ON note_task_list_chunks.list_id = task_lists.id) AS full_note_task_list_chunks ON note_chunks.id = full_note_task_list_chunks.id WHERE note_id = $1",
 		[note.id]
 	);
 });
