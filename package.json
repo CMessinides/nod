@@ -23,7 +23,7 @@
   },
   "lint-staged": {
     "linters": {
-      "*.js": [
+      "*.{js,jsx,ts,tsx}": [
         "eslint --fix",
         "prettier --write",
         "jest --bail --findRelatedTests",
