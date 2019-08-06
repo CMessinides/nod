@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should order a linked list 1`] = `
+Array [
+  Object {
+    "id": 7,
+    "prevId": null,
+  },
+  Object {
+    "id": 5,
+    "prevId": 7,
+  },
+  Object {
+    "id": 6,
+    "prevId": 5,
+  },
+  Object {
+    "id": 4,
+    "prevId": 6,
+  },
+  Object {
+    "id": 3,
+    "prevId": 4,
+  },
+]
+`;

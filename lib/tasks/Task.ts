@@ -1,7 +1,7 @@
 import DB from "../DB";
 import { TaskModel } from "./interfaces";
 import TaskList from "./TaskList";
-import { sortLinkedList } from "../linkedList";
+import LinkedList from "../LinkedList";
 
 type TaskRecord = {
 	id: number;
@@ -42,11 +42,9 @@ export default class Task implements TaskModel {
 			[listId]
 		);
 
-		const sortedRecords: TaskRecord[] = sortLinkedList(records, {
-			prevIdKey: "prev_task_id"
-		});
-
-		return sortedRecords.map(Task.fromRecord);
+		return Array.from(LinkedList(records, "id", "prev_task_id")).map(
+			Task.fromRecord
+		);
 	}
 
 	static fromRecord({ id, name, done, created_at, list_id }: TaskRecord) {
