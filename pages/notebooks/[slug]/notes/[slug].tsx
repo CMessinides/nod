@@ -13,7 +13,7 @@ import {
 	NoteChunkType
 } from "../../../../lib/types";
 import { ResponseError } from "../../../../client/errors";
-import { isSlug, getIdFromSlug } from "../../../../lib/slugs";
+import { isSlug, getIdFromSlug } from "../../../../lib/slugs/utils";
 import { redirectIfNecessary } from "../../../../lib/routes";
 
 interface QueryData {
@@ -101,7 +101,7 @@ NotePage.getInitialProps = async function({ query, req, res }) {
 	}
 
 	const id = getIdFromSlug(query.slug as string);
-	let { data, error } = await ApiClient.request<QueryData>({
+	const { data, error } = await ApiClient.request<QueryData>({
 		query: `
 			query {
 				note: noteById(id: ${id}) {

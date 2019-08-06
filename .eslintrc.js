@@ -5,7 +5,12 @@ module.exports = {
 		node: true,
 		"jest/globals": true
 	},
-	extends: ["eslint:recommended", "plugin:react/recommended"],
+	extends: [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react/recommended"
+	],
 	globals: {
 		Atomics: "readonly",
 		SharedArrayBuffer: "readonly"
@@ -19,5 +24,8 @@ module.exports = {
 		sourceType: "module"
 	},
 	plugins: ["@typescript-eslint", "react", "jest"],
-	rules: {}
+	rules: {
+		"react/prop-types": "off",
+		"@typescript-eslint/indent": ["error", "tab"]
+	}
 };

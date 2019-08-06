@@ -7,7 +7,7 @@ import Link from "next/link";
 import { NextPage } from "next";
 import Error from "next/error";
 import { Notebook, ApiResource } from "../../../lib/types";
-import { isSlug, getIdFromSlug } from "../../../lib/slugs";
+import { isSlug, getIdFromSlug } from "../../../lib/slugs/utils";
 import { redirectIfNecessary } from "../../../lib/routes";
 
 interface QueryData {
@@ -77,7 +77,7 @@ NotebookPage.getInitialProps = async function({ query, req, res }) {
 	}
 
 	const id = getIdFromSlug(query.slug as string);
-	let { data, error } = await ApiClient.request<QueryData>({
+	const { data, error } = await ApiClient.request<QueryData>({
 		query: `
       query {
         notebook: notebookById(id: ${id}) {
