@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`static methods findById should return the task with the given ID 1`] = `
+Task {
+  "createdAt": 1970-01-18T20:10:49.268Z,
+  "done": false,
+  "id": 1,
+  "listId": 1,
+  "name": "Soup - Campbells Chili",
+}
+`;
+
+exports[`static methods getAllInList should return the list's tasks in order 1`] = `
+Array [
+  Task {
+    "createdAt": 1970-01-18T20:10:49.268Z,
+    "done": false,
+    "id": 1,
+    "listId": 1,
+    "name": "Soup - Campbells Chili",
+  },
+  Task {
+    "createdAt": 1970-01-19T00:31:47.828Z,
+    "done": false,
+    "id": 8,
+    "listId": 1,
+    "name": "Beans - Turtle, Black, Dry",
+  },
+  Task {
+    "createdAt": 1970-01-19T01:21:40.186Z,
+    "done": true,
+    "id": 7,
+    "listId": 1,
+    "name": "Contreau",
+  },
+  Task {
+    "createdAt": 1970-01-18T20:12:24.398Z,
+    "done": false,
+    "id": 2,
+    "listId": 1,
+    "name": "Lotus Rootlets - Canned",
+  },
+  Task {
+    "createdAt": 1970-01-18T20:01:40.482Z,
+    "done": true,
+    "id": 4,
+    "listId": 1,
+    "name": "Turkey - Breast, Boneless Sk On",
+  },
+]
+`;

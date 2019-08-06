@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`static methods findById should return the list with the given ID 1`] = `
+TaskList {
+  "id": 1,
+  "name": "Chores",
+}
+`;
