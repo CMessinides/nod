@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`instance methods content should return the note's content chunks in order 1`] = `
+Array [
+  NoteTaskListChunk {
+    "id": 1,
+    "listId": 46,
+    "name": "Outdoors",
+    "type": "TASK_LIST",
+  },
+  NoteTextContentChunk {
+    "id": 2,
+    "text": "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio.",
+    "type": "TEXT_CONTENT",
+  },
+  NoteTaskListChunk {
+    "id": 3,
+    "listId": 39,
+    "name": "Tools",
+    "type": "TASK_LIST",
+  },
+]
+`;
+
+exports[`static methods findById should return the note with the given ID 1`] = `
+Note {
+  "createdAt": 1970-01-18T12:32:29.373Z,
+  "id": 1,
+  "modifiedAt": 1970-01-18T22:40:08.092Z,
+  "notebookId": 2,
+  "slug": "gekko-gecko--1",
+  "title": "Gekko gecko",
+}
+`;
+
+exports[`static methods getAllInNotebook should return the notes in the given notebook sorted by modified date 1`] = `
+Array [
+  Note {
+    "createdAt": 1970-01-18T13:29:58.688Z,
+    "id": 7,
+    "modifiedAt": 1970-01-19T02:26:11.161Z,
+    "notebookId": 1,
+    "slug": "columba-livia--7",
+    "title": "Columba livia",
+  },
+  Note {
+    "createdAt": 1970-01-18T15:30:25.338Z,
+    "id": 2,
+    "modifiedAt": 1970-01-19T02:12:06.287Z,
+    "notebookId": 1,
+    "slug": "ardea-cinerea--2",
+    "title": "Ardea cinerea",
+  },
+]
+`;

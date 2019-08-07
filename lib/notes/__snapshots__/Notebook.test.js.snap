@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`static methods findById should return the notebook with the given ID 1`] = `
+Notebook {
+  "createdAt": 1970-01-18T10:34:31.205Z,
+  "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+  "id": 1,
+  "slug": "dendrocitta-vagabunda--1",
+  "title": "Dendrocitta vagabunda",
+}
+`;

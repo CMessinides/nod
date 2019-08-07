@@ -26,6 +26,8 @@ module.exports = {
 	plugins: ["@typescript-eslint", "react", "jest"],
 	rules: {
 		"react/prop-types": "off",
-		"@typescript-eslint/indent": ["error", "tab"]
+		"@typescript-eslint/explicit-member-accessibility": "off",
+		"@typescript-eslint/camelcase": "off",
+		"@typescript-eslint/indent": "off"
 	}
 };

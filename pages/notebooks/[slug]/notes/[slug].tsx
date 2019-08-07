@@ -13,7 +13,7 @@ import {
 	NoteChunkType
 } from "../../../../lib/types";
 import { ResponseError } from "../../../../client/errors";
-import { isSlug, getIdFromSlug } from "../../../../lib/slugs/utils";
+import { isSlug, getIdFromSlug } from "../../../../lib/slugs";
 import { redirectIfNecessary } from "../../../../lib/routes";
 
 interface QueryData {

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { NextPage } from "next";
 import Error from "next/error";
 import { Notebook, ApiResource } from "../../../lib/types";
-import { isSlug, getIdFromSlug } from "../../../lib/slugs/utils";
+import { isSlug, getIdFromSlug } from "../../../lib/slugs";
 import { redirectIfNecessary } from "../../../lib/routes";
 
 interface QueryData {
