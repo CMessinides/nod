@@ -29,7 +29,7 @@
 				"jest --bail --findRelatedTests",
 				"git add"
 			],
-			"*.json": [
+			"*.{json,graphql}": [
 				"prettier --write",
 				"git add"
 			]
