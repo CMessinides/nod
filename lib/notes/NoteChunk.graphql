@@ -1,0 +1,9 @@
+enum NoteChunkType {
+	TEXT_CONTENT
+	TASK_LIST
+}
+
+interface NoteChunk {
+	id: ID!
+	type: NoteChunkType!
+}

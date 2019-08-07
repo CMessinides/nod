@@ -1,0 +1,5 @@
+type TaskList implements Foo, Bar {
+	id: ID!
+	name: String!
+	tasks: [Task]!
+}

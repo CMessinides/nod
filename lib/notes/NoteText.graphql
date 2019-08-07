@@ -1,0 +1,5 @@
+type NoteText implements NoteChunk {
+	id: ID!
+	type: NoteChunkType!
+	text: String!
+}

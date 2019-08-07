@@ -1,0 +1,6 @@
+type Task {
+	id: ID!
+	name: String!
+	done: Boolean!
+	createdAt: Date!
+}

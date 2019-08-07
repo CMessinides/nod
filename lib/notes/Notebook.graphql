@@ -1,0 +1,8 @@
+type Notebook {
+	id: ID!
+	title: String!
+	slug: String!
+	description: String
+	createdAt: Date!
+	notes: [Note]!
+}

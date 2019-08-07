@@ -1,0 +1,6 @@
+type NoteTaskList implements NoteChunk {
+	id: ID!
+	type: NoteChunkType!
+	name: String!
+	tasks: [Task]!
+}
