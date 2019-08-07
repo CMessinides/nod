@@ -3,6 +3,8 @@ import DB from "../DB";
 import pipe from "lodash/fp/pipe";
 import { makeSluggable } from "../slugs";
 import Note from "./Note";
+import sortBy from "lodash/fp/sortBy";
+import reverse from "lodash/fp/reverse";
 
 interface NotebookRecord {
 	id: number;
@@ -14,6 +16,10 @@ interface NotebookRecord {
 type NotebookParams = Omit<NotebookModel, "notes" | "slug">;
 
 const prepareNotebook: (notebook: Notebook) => Notebook = pipe(makeSluggable);
+const sortByCreatedDate = pipe(
+	sortBy<Notebook>("createdAt"),
+	reverse
+);
 
 export default class Notebook implements NotebookModel {
 	id: number;
@@ -33,6 +39,14 @@ export default class Notebook implements NotebookModel {
 		}
 
 		return Notebook.fromRecord(rows[0] as NotebookRecord);
+	}
+
+	static async all(): Promise<Notebook[]> {
+		const { rows }: { rows: NotebookRecord[] } = await DB.query(
+			"SELECT * FROM notebooks;"
+		);
+
+		return sortByCreatedDate(rows.map(Notebook.fromRecord));
 	}
 
 	static fromRecord({ created_at, ...props }: NotebookRecord): Notebook {

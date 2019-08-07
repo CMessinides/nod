@@ -1,4 +1,4 @@
-type TaskList implements Foo, Bar {
+type TaskList {
 	id: ID!
 	name: String!
 	tasks: [Task]!

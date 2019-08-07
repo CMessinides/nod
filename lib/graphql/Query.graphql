@@ -1,5 +1,5 @@
 type Query {
-	notebooks: [Notebook]
+	notebooks: [Notebook]!
 	notebookById(id: ID!): Notebook
 	noteById(id: ID!): Note
 }

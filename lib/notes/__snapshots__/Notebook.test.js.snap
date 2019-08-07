@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`static methods all should return all notebooks 1`] = `
+Array [
+  Notebook {
+    "createdAt": 1970-01-18T16:01:01.001Z,
+    "description": "Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
+    "id": 2,
+    "slug": "geochelone-radiata--2",
+    "title": "Geochelone radiata",
+  },
+  Notebook {
+    "createdAt": 1970-01-18T15:21:16.522Z,
+    "description": "Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.",
+    "id": 3,
+    "slug": "snycerus-caffer--3",
+    "title": "Snycerus caffer",
+  },
+  Notebook {
+    "createdAt": 1970-01-18T12:45:05.294Z,
+    "description": "Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.",
+    "id": 4,
+    "slug": "anas-punctata--4",
+    "title": "Anas punctata",
+  },
+  Notebook {
+    "createdAt": 1970-01-18T10:34:31.205Z,
+    "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+    "id": 1,
+    "slug": "dendrocitta-vagabunda--1",
+    "title": "Dendrocitta vagabunda",
+  },
+]
+`;
+
 exports[`static methods findById should return the notebook with the given ID 1`] = `
 Notebook {
   "createdAt": 1970-01-18T10:34:31.205Z,

@@ -5,5 +5,5 @@ import { dev } from "../config/server.config";
 const pool = new Pool({ connectionString, ssl: !dev });
 
 export default {
-	query: pool.query
+	query: pool.query.bind(pool)
 };
