@@ -12,9 +12,8 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"jsx": "preserve",
-		"experimentalDecorators": true
+		"jsx": "preserve"
 	},
 	"exclude": ["node_modules"],
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+	"include": ["graphql.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

@@ -1,13 +1,18 @@
 {
-	"presets": [
-		[
-			"next/babel",
-			{
-				"preset-env": { "targets": { "node": "current" } }
-			}
-		]
-	],
-	"plugins": [
-		["@babel/plugin-proposal-decorators", { "legacy": true }]
-	]
+  "presets": [
+    [
+      "next/babel",
+      {
+        "preset-env": { "targets": { "node": "current" } }
+      }
+    ]
+  ],
+  "plugins": [
+    ["babel-plugin-inline-import", {
+      "extensions": [
+        ".sql",
+        ".graphql"
+      ]
+    }]
+  ]
 }
